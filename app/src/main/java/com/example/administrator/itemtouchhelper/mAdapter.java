@@ -57,4 +57,6 @@ public class mAdapter extends RecyclerView.Adapter<HolderImg> {
     public int getItemCount() {
         return contents == null ? 0 : contents.size();
     }
+
+
 }

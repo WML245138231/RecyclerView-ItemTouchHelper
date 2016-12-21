@@ -16,55 +16,109 @@ import android.view.animation.LinearInterpolator;
  */
 
 public class MItemTouchHelperBack extends ItemTouchHelper.Callback {
+
+    private static final int GETMOVEMENTFlAGS_DID_TIME = 2;
+    private static final int GETMOVEMENTFlAGS_NOT_DID_TIME = 0;
     /*
     * 回调监听
     * */
     private OnItemTouchCallbackIm onItemTouchCallbackListener;
-
-    private boolean canDrag = true;
-    private boolean canSwipe = true;
 
     public MItemTouchHelperBack(OnItemTouchCallbackIm onItemTouchCallbackListener) {
         this.onItemTouchCallbackListener = onItemTouchCallbackListener;
     }
 
     /*
-    * Item根据布局设置允许拖动与滑动的方向
+    * 当前拖动中的viewHolder(Item)
+    * */
+    private RecyclerView.ViewHolder selectedViewHolder;
+    /*
+    * 是否可拖动，滑动
+    * */
+    private boolean canDrag = true;
+    private boolean canSwipe = true;
+
+    /*
+    * 是否处于拖动状态
+    * */
+    private boolean isDraging = false;
+    /*
+    * 用于判断当前长按、布局处理事件是否执行完毕(执行完毕即可进行判断)
+    * */
+    private int isGetMovementFlagsDown = 0;
+
+    /*
+    * Item根据布局设置允许拖动与滑动的方向(此方法会执行两次)
     * */
     @Override
     public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
-        applifacation(viewHolder);
+        //不同布局的不同处理
         RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
         int dragFlags = 0;
         int swipeFlags = 0;
         if (layoutManager instanceof GridLayoutManager) {
+            //GridLayoutManager允许左右上下拖动，不允许滑动
             dragFlags =
                     ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;
             swipeFlags = 0;
         } else if (layoutManager instanceof LinearLayoutManager) {
             if (((LinearLayoutManager) layoutManager).getOrientation() == LinearLayoutManager.VERTICAL) {
+                //纵向LinearLayoutManager允许上下拖动，允许左右滑动
                 dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN;
                 swipeFlags = ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;
             } else {
+                //横向LinearLayoutManager允许左右拖动，允许上下滑动
                 swipeFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN;
                 dragFlags = ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;
             }
         }
-        narrow(viewHolder);
+        //处理长按、布局处理事件判断
+        isGetMovementFlagsDown++;
+        if (isGetMovementFlagsDown == GETMOVEMENTFlAGS_DID_TIME) {
+            //执行放大操作
+            applifacation(viewHolder);
+            //记录当前拖动中的viewHolder
+            selectedViewHolder=viewHolder;
+        }
         return makeMovementFlags(dragFlags, swipeFlags);
     }
 
+
     /*
-    * item拖动中
+    * item长按选中状态的变化
     * */
     @Override
+    public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
+        if (isDraging&&selectedViewHolder!=null) {
+            narrow(selectedViewHolder);
+            isDraging=false;
+            isGetMovementFlagsDown=GETMOVEMENTFlAGS_NOT_DID_TIME;
+            selectedViewHolder=null;
+        }
+        if (isGetMovementFlagsDown == GETMOVEMENTFlAGS_DID_TIME) {
+            isDraging = true;
+        }
+        super.onSelectedChanged(viewHolder, actionState);
+    }
+
+    /*
+     * item拖动中
+     * */
+    @Override
     public float getMoveThreshold(RecyclerView.ViewHolder viewHolder) {
-        narrow(viewHolder);
         return super.getMoveThreshold(viewHolder);
     }
 
     /*
-     * Item拖动事件
+    * 位置发生变化后处理
+    * */
+    @Override
+    public void onMoved(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, int fromPos, RecyclerView.ViewHolder target, int toPos, int x, int y) {
+        super.onMoved(recyclerView, viewHolder, fromPos, target, toPos, x, y);
+    }
+
+    /*
+     * Item位置变化
      * */
     @Override
     public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
@@ -104,7 +158,7 @@ public class MItemTouchHelperBack extends ItemTouchHelper.Callback {
     }
 
     /*
-    * 获取相应ViewHolder的View后的操作
+    * 获取相应ViewHolder的View后的操作(放大缩小)
     * */
     private void applifacation(RecyclerView.ViewHolder viewHolderv) {
         if (viewHolderv instanceof HolderImg) {
@@ -125,11 +179,11 @@ public class MItemTouchHelperBack extends ItemTouchHelper.Callback {
     * */
     public void startAnimation(View view) {
         ObjectAnimator anim1 = ObjectAnimator.ofFloat(view, "scaleX",
-                1.0f, 1.1f);
+                1.0f, 1.08f);
         ObjectAnimator anim2 = ObjectAnimator.ofFloat(view, "scaleY",
-                1.0f, 1.1f);
+                1.0f, 1.08f);
         AnimatorSet animSet = new AnimatorSet();
-        animSet.setDuration(500);
+        animSet.setDuration(400);
         animSet.setInterpolator(new LinearInterpolator());
         animSet.playTogether(anim1, anim2);
         animSet.start();
@@ -137,11 +191,11 @@ public class MItemTouchHelperBack extends ItemTouchHelper.Callback {
 
     public void cancelAinimation(View view) {
         ObjectAnimator anim1 = ObjectAnimator.ofFloat(view, "scaleX",
-                1.1f, 1.0f);
+                1.08f, 1.0f);
         ObjectAnimator anim2 = ObjectAnimator.ofFloat(view, "scaleY",
-                1.1f, 1.0f);
+                1.08f, 1.0f);
         AnimatorSet animSet = new AnimatorSet();
-        animSet.setDuration(500);
+        animSet.setDuration(400);
         animSet.setInterpolator(new LinearInterpolator());
         animSet.playTogether(anim1, anim2);
         animSet.start();

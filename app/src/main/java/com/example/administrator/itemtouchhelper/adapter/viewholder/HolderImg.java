@@ -1,10 +1,11 @@
-package com.example.administrator.itemtouchhelper;
+package com.example.administrator.itemtouchhelper.adapter.viewholder;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.WindowManager;
 
+import com.example.administrator.itemtouchhelper.R;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 /**

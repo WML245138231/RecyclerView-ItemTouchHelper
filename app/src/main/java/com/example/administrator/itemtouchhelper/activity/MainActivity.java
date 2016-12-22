@@ -1,21 +1,32 @@
-package com.example.administrator.itemtouchhelper;
+package com.example.administrator.itemtouchhelper.activity;
 
+import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.Button;
 
+import com.example.administrator.itemtouchhelper.itemhelper.MItemTouchHelper;
+import com.example.administrator.itemtouchhelper.itemhelper.minterface.OnItemTouchCallbackIm;
+import com.example.administrator.itemtouchhelper.R;
+import com.example.administrator.itemtouchhelper.adapter.mAdapter;
+import com.example.administrator.itemtouchhelper.tools.DisplayUtils;
 import com.facebook.drawee.backends.pipeline.Fresco;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private mAdapter madapter;
     private RecyclerView recyclerView;
-    private ArrayList<String> img;
+    private ArrayList<Object> img;
+
+    private Button bt_llVertiacal;
+    private Button bt_llHorizontal;
     /*
     * item监听器
     * */
@@ -26,8 +37,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Fresco.initialize(this);
         setContentView(R.layout.activity_main);
-        img = new ArrayList<>();
         recyclerView = (RecyclerView) findViewById(R.id.mRecycle);
+        bt_llVertiacal= (Button) findViewById(R.id.bt_llVertiacal);
+        bt_llHorizontal= (Button) findViewById(R.id.bt_llHorizontal);
+        bt_llVertiacal.setOnClickListener(this);
+        bt_llHorizontal.setOnClickListener(this);
+
+        img = new ArrayList<>();
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
@@ -37,7 +53,10 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        mItemTouchHelper = new MItemTouchHelper(new OnItemTouchCallbackIm() {
+        /*
+        * 获取ItemTouchHelper
+        * */
+        mItemTouchHelper=new MItemTouchHelper(new OnItemTouchCallbackIm() {
             /*
              * item拖动回调实现
              * */
@@ -47,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
                     return false;
                 }
                 Collections.swap(img, viewHolder.getAdapterPosition(), target.getAdapterPosition());
-                    madapter.notifyItemMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition());
+                madapter.notifyItemMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition());
                 return true;
             }
             /*
@@ -66,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         * 添加ItemTouchHelper.Callback
         * */
         mItemTouchHelper.attachToRecyclerView(recyclerView);
-        madapter = new mAdapter(this, img);
+        madapter = new mAdapter(this,img);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(madapter);
@@ -83,5 +102,17 @@ public class MainActivity extends AppCompatActivity {
         img.add(10, "http://up.qqjia.com/z/25/tu32695_10.jpg");
         img.add(11, "http://v1.qzone.cc/avatar/201503/15/13/08/550513b64bcbf041.jpg%21200x200.jpg");
         img.add(12, "http://www.poluoluo.com/qq/UploadFiles_7828/201611/2016110420035637.jpg");
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.bt_llVertiacal:
+                startActivity(new Intent(this,LinearLayout_Ver.class));
+                break;
+            case R.id.bt_llHorizontal:
+
+                break;
+        }
     }
 }

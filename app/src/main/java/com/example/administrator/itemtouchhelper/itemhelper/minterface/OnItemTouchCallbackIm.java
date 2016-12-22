@@ -1,4 +1,4 @@
-package com.example.administrator.itemtouchhelper;
+package com.example.administrator.itemtouchhelper.itemhelper.minterface;
 
 import android.support.v7.widget.RecyclerView;
 

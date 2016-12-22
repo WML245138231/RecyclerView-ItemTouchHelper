@@ -1,4 +1,4 @@
-package com.example.administrator.itemtouchhelper;
+package com.example.administrator.itemtouchhelper.itemhelper;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
@@ -7,9 +7,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
+
+import com.example.administrator.itemtouchhelper.itemhelper.minterface.OnItemTouchCallbackIm;
+import com.example.administrator.itemtouchhelper.adapter.viewholder.HolderImg;
 
 /**
  * Created by Administrator on 2016/12/15.
@@ -83,13 +86,13 @@ public class MItemTouchHelperBack extends ItemTouchHelper.Callback {
         return makeMovementFlags(dragFlags, swipeFlags);
     }
 
-
     /*
     * item长按选中状态的变化
     * */
     @Override
     public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
         if (isDraging&&selectedViewHolder!=null) {
+            //放手后重置所有相关记录
             narrow(selectedViewHolder);
             isDraging=false;
             isGetMovementFlagsDown=GETMOVEMENTFlAGS_NOT_DID_TIME;
@@ -100,6 +103,8 @@ public class MItemTouchHelperBack extends ItemTouchHelper.Callback {
         }
         super.onSelectedChanged(viewHolder, actionState);
     }
+
+
 
     /*
      * item拖动中
@@ -126,11 +131,17 @@ public class MItemTouchHelperBack extends ItemTouchHelper.Callback {
     }
 
     /*
-     * Item滑动事件
+     * Item滑动后事件
      * */
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
         onItemTouchCallbackListener.onSwiped(viewHolder, direction);
+    }
+
+    @Override
+    public float getSwipeThreshold(RecyclerView.ViewHolder viewHolder) {
+        Log.e("SwipeThreshold","----->");
+        return super.getSwipeThreshold(viewHolder);
     }
 
     /**

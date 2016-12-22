@@ -1,14 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
-    android:layout_marginTop="10dp"
+    android:layout_marginTop="5dp"
+    android:orientation="vertical"
     android:layout_height="match_parent"
-    tools:context="com.example.administrator.itemtouchhelper.MainActivity">
+    tools:context="com.example.administrator.itemtouchhelper.activity.MainActivity">
     <android.support.v7.widget.RecyclerView
+        android:layout_weight="1"
         android:id="@+id/mRecycle"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
     </android.support.v7.widget.RecyclerView>
-</RelativeLayout>
+    <Button
+        android:id="@+id/bt_llVertiacal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="LinearLayout_Vertical"
+        />
+    <Button
+        android:id="@+id/bt_llHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="LinearLayout_horizontal"
+        />
+</LinearLayout>

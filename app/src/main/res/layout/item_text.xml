@@ -1,29 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.example.administrator.itemtouchhelper.tools.MRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
-    <LinearLayout
+
+
+    <TextView
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:text="删除"
+        android:background="#ff4242"
+        android:textColor="#ffffff" />
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="wrap_content">
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#f4b2b2"
-            ></View>
+        android:layout_height="50dp">
+
         <TextView
             android:id="@+id/mtextView"
-            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:text="1.纵向LinearLayout布局"
-            />
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#f4b2b2"
-            ></View>
-    </LinearLayout>
+            android:background="#ffffff"
+            android:gravity="center"
+            android:text="1.纵向LinearLayout布局" />
+    </RelativeLayout>
 
-</LinearLayout>
+</com.example.administrator.itemtouchhelper.tools.MRelativeLayout>
+
+

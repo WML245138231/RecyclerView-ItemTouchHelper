@@ -18,7 +18,7 @@ import com.example.administrator.itemtouchhelper.adapter.viewholder.HolderImg;
  * Created by Administrator on 2016/12/15.
  */
 
-public class MItemTouchHelperBack extends ItemTouchHelper.Callback {
+public class MItemTouchHelperBack extends ItemTouchHelper.Callback{
 
     private static final int GETMOVEMENTFlAGS_DID_TIME = 2;
     private static final int GETMOVEMENTFlAGS_NOT_DID_TIME = 0;
@@ -50,6 +50,7 @@ public class MItemTouchHelperBack extends ItemTouchHelper.Callback {
     * */
     private int isGetMovementFlagsDown = 0;
 
+
     /*
     * Item根据布局设置允许拖动与滑动的方向(此方法会执行两次)
     * */
@@ -68,10 +69,12 @@ public class MItemTouchHelperBack extends ItemTouchHelper.Callback {
             if (((LinearLayoutManager) layoutManager).getOrientation() == LinearLayoutManager.VERTICAL) {
                 //纵向LinearLayoutManager允许上下拖动，允许左右滑动
                 dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN;
-                swipeFlags = ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;
+//                swipeFlags = ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;
+                swipeFlags=0;
             } else {
                 //横向LinearLayoutManager允许左右拖动，允许上下滑动
                 swipeFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN;
+                swipeFlags = 0;
                 dragFlags = ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;
             }
         }

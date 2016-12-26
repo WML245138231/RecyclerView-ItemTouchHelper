@@ -311,16 +311,16 @@ public class MItemMenuTouchListener implements RecyclerView.OnItemTouchListener,
             if (scrollX > width) {
                 //打开View(大于菜单一半)
                 to = bottomViewWith;
-                duration = (int) (DURATION * (float) (scrollX - width) / width);
+//                duration = (int) (DURATION * (float) (scrollX - width) / width);
             } else {
                 //关闭View(小于菜单一半)
                 to = 0;
-                duration = (int) (duration * (float) (scrollX) / width);
+//                duration = (int) (duration * (float) (scrollX) / width);
             }
         } else {
             //关闭View
             to = 0;
-            duration = (int) (duration * (float) (scrollX) / width);
+//            duration = (int) (duration * (float) (scrollX) / width);
         }
         if (to == scrollX) {
             //若已经滑动到头则不执行动画

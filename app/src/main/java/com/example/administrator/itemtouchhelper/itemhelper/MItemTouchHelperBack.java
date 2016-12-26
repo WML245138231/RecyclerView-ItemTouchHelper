@@ -68,7 +68,7 @@ public class MItemTouchHelperBack extends ItemTouchHelper.Callback{
         } else if (layoutManager instanceof LinearLayoutManager) {
             if (((LinearLayoutManager) layoutManager).getOrientation() == LinearLayoutManager.VERTICAL) {
                 //纵向LinearLayoutManager允许上下拖动，允许左右滑动
-                dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN;
+//                dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN;
 //                swipeFlags = ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;
                 swipeFlags=0;
             } else {

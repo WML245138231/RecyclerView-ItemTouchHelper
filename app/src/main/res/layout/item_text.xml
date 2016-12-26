@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.example.administrator.itemtouchhelper.tools.MRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    >
 
+    <RelativeLayout
+        android:layout_width="200dp"
+        android:layout_alignParentRight="true"
+        android:layout_height="50dp">
 
-    <TextView
-        android:layout_width="60dp"
-        android:layout_height="50dp"
-        android:gravity="center"
-        android:text="删除"
-        android:background="#ff4242"
-        android:textColor="#ffffff" />
+        <TextView
+            android:id="@+id/tv_del"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:background="#ff4242"
+            android:gravity="center"
+            android:text="删除"
+            android:textColor="#292828" />
+    </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp">
@@ -25,6 +32,6 @@
             android:text="1.纵向LinearLayout布局" />
     </RelativeLayout>
 
-</com.example.administrator.itemtouchhelper.tools.MRelativeLayout>
+</RelativeLayout>
 
 

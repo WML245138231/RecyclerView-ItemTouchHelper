@@ -365,6 +365,8 @@ public class MItemMenuTouchListener implements RecyclerView.OnItemTouchListener,
         int scrollX = topView.getScrollX();
         int scrollY = topView.getScrollY();
         if ((scrollX + delta) <= 0) {
+            scrollX += delta * Math.log(1.25);
+            topView.scrollTo(scrollX, scrollY);
 //            topView.scrollTo(0, scrollY);
             return;
         }
